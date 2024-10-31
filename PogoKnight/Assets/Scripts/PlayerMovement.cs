@@ -13,10 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private LayerMask groundMask;
     private bool _isGrounded;
 
-    public float speed = 12f;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3f;
-
     private Vector2 movementInput;
     private Vector2 cameraInput;
     private float _xRotation = 90f;
@@ -27,12 +23,27 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerMovementState movementState = PlayerMovementState.moving;
 
+
+    //jumping / moving
+    [SerializeField]
+    private float _movementSpeed = 3f;
+    [SerializeField]
+    private float _gravity = -9.81f;
+    [SerializeField]
+    private float _jumpHeight = 4f;
+    [SerializeField]
+    private float _maxJumpHeight = 4f;
+    [SerializeField]
+    private float _chargeSpeed = 1.5f;
+
+
     LineRenderer lineRenderer;
 
     void Start()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.SetWidth(.25f, .25f);
+        lineRenderer.startWidth = .25f;
+        lineRenderer.endWidth = .25f;
         lineRenderer.material.color = Color.cyan;
 
         _characterController = GetComponent<CharacterController>();
@@ -82,20 +93,20 @@ public class PlayerMovement : MonoBehaviour
     { 
         //movement stuff
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
-        _characterController.Move(movement * speed * Time.deltaTime);
+        _characterController.Move(movement * _movementSpeed * Time.deltaTime);
     }
 
     private void handleChargingState()
     {
-        // probably decide how to jump to different directions
         Vector3 center = gameObject.transform.position;
-
         lineRenderer.SetPosition(0, center);
-
-        Vector3 end = center + new Vector3(movementInput.x, center.y, movementInput.y);
-
+        Vector3 end = center + transform.TransformDirection(new Vector3(movementInput.x * _jumpHeight, _jumpHeight, movementInput.y * _jumpHeight));
         lineRenderer.SetPosition(1, end);
 
+        // could rotate the player instead / as well
+
+        _jumpHeight += Time.deltaTime * _chargeSpeed;
+        _jumpHeight = Mathf.Clamp(_jumpHeight, 0, _maxJumpHeight);
     }
 
     private void handleLaunchingState()
@@ -113,11 +124,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isGrounded && _velocity.y < 0)
         {
-            //_velocity.y = 0f;
             _velocity = Vector3.zero;
         }
 
-        _velocity.y += gravity * Time.deltaTime;
+        _velocity.y += _gravity * Time.deltaTime;
         _characterController.Move(_velocity * Time.deltaTime);
     }
 
@@ -154,10 +164,6 @@ public class PlayerMovement : MonoBehaviour
     {
         movementInput = value.Get<Vector2>();
 
-        Debug.Log(movementInput);
-
-        Debug.Log(movementInput.magnitude);
-
         if (movementInput.magnitude == 0 & _isGrounded & movementState == PlayerMovementState.moving)
         {
             movementState = PlayerMovementState.idle;
@@ -166,8 +172,6 @@ public class PlayerMovement : MonoBehaviour
         {
             movementState = PlayerMovementState.moving;
         }
-
-        Debug.Log(movementState);
     }
 
     public void OnLook(InputValue value)
@@ -182,13 +186,16 @@ public class PlayerMovement : MonoBehaviour
         if (!(movementState == PlayerMovementState.charging) & _isGrounded & input == 1)
         {
             movementState = PlayerMovementState.charging;
+            _jumpHeight = 0;
         }
         else if ((movementState == PlayerMovementState.charging) & _isGrounded & input == 0)
         {
             movementState = PlayerMovementState.launching;
-            _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            _velocity.x = movementInput.x * jumpHeight;
-            _velocity.z = movementInput.y * jumpHeight;
+
+            _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity); //this could all be cleaned up late, but probably wont be
+            _velocity.x = movementInput.x * _jumpHeight;
+            _velocity.z = movementInput.y * _jumpHeight;
+            _velocity = transform.TransformDirection(_velocity);
         }
     }
 }
