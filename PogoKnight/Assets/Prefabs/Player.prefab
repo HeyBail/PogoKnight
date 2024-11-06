@@ -235,12 +235,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraCenter: {fileID: 3779115576689514810}
-  playerCamera: {fileID: 0}
-  _movementSpeed: 3
+  playerCamera: {fileID: 7827377839060676925}
+  _movementSpeed: 7
   _gravity: -9.81
   _jumpHeight: 4
-  _maxJumpHeight: 10
-  _chargeSpeed: 2
+  _maxJumpHeight: 15
+  _chargeSpeed: 4
 --- !u!114 &7189266279142313072
 MonoBehaviour:
   m_ObjectHideFlags: 0
