@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _movementSpeed = 3f;
     [SerializeField]
+    private float _airControlSpeed = 1f;
+    [SerializeField]
     private float _gravity = -9.81f;
     [SerializeField]
     private float _jumpHeight = 4f;
@@ -37,7 +39,9 @@ public class PlayerMovement : MonoBehaviour
     private float _chargeSpeed = 1.5f;
 
 
-    LineRenderer lineRenderer;
+    private LineRenderer lineRenderer;
+    private WaitForSeconds lineDuration = new WaitForSeconds(3f);
+
 
     void Start()
     {
@@ -45,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         lineRenderer.startWidth = .25f;
         lineRenderer.endWidth = .25f;
         lineRenderer.material.color = Color.cyan;
+        lineRenderer.enabled = false;
 
         _characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -111,7 +116,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void handleLaunchingState()
     {
-
+        //_velocity.x += // make this movement nicer, continually increase speed when launching using movement keys. maybe keep track of horizontal velocity and keep adding to it
+        Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
+        _characterController.Move(movement * _airControlSpeed * Time.deltaTime);
         //not a whole lot to do, maybe mid air rotations
     }
 
@@ -135,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //camera stuff
         _xRotation -= cameraInput.y * _mouseSensitivity * Time.deltaTime;
-        _xRotation = Mathf.Clamp(_xRotation, 0f, 90f);
+        _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
         cameraCenter.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * cameraInput.x * _mouseSensitivity * Time.deltaTime);
     }
@@ -156,8 +163,8 @@ public class PlayerMovement : MonoBehaviour
     {
         movementState = PlayerMovementState.moving;
         transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+        lineRenderer.enabled = false;
     }
-
 
     //Movement Input Actions
     public void OnMove(InputValue value)
@@ -187,6 +194,8 @@ public class PlayerMovement : MonoBehaviour
         {
             movementState = PlayerMovementState.charging;
             _jumpHeight = 0;
+
+            lineRenderer.enabled = true;
         }
         else if ((movementState == PlayerMovementState.charging) & _isGrounded & input == 0)
         {
