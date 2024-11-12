@@ -145,6 +145,34 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""lockPickingGame"",
+            ""id"": ""34f4fb33-cd73-4daa-aff1-011fd3f91690"",
+            ""actions"": [
+                {
+                    ""name"": ""Pogo"",
+                    ""type"": ""Value"",
+                    ""id"": ""185d5afd-0e66-4878-ac85-7718ca994cba"",
+                    ""expectedControlType"": ""Integer"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3fbfdf22-9f89-4c98-99c7-e3de9175c749"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pogo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -154,11 +182,15 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         m_playerMovement_Move = m_playerMovement.FindAction("Move", throwIfNotFound: true);
         m_playerMovement_Jump = m_playerMovement.FindAction("Jump", throwIfNotFound: true);
         m_playerMovement_Look = m_playerMovement.FindAction("Look", throwIfNotFound: true);
+        // lockPickingGame
+        m_lockPickingGame = asset.FindActionMap("lockPickingGame", throwIfNotFound: true);
+        m_lockPickingGame_Pogo = m_lockPickingGame.FindAction("Pogo", throwIfNotFound: true);
     }
 
     ~@IA_PlayerInputs()
     {
         UnityEngine.Debug.Assert(!m_playerMovement.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.playerMovement.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_lockPickingGame.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.lockPickingGame.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -278,10 +310,60 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public PlayerMovementActions @playerMovement => new PlayerMovementActions(this);
+
+    // lockPickingGame
+    private readonly InputActionMap m_lockPickingGame;
+    private List<ILockPickingGameActions> m_LockPickingGameActionsCallbackInterfaces = new List<ILockPickingGameActions>();
+    private readonly InputAction m_lockPickingGame_Pogo;
+    public struct LockPickingGameActions
+    {
+        private @IA_PlayerInputs m_Wrapper;
+        public LockPickingGameActions(@IA_PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pogo => m_Wrapper.m_lockPickingGame_Pogo;
+        public InputActionMap Get() { return m_Wrapper.m_lockPickingGame; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LockPickingGameActions set) { return set.Get(); }
+        public void AddCallbacks(ILockPickingGameActions instance)
+        {
+            if (instance == null || m_Wrapper.m_LockPickingGameActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_LockPickingGameActionsCallbackInterfaces.Add(instance);
+            @Pogo.started += instance.OnPogo;
+            @Pogo.performed += instance.OnPogo;
+            @Pogo.canceled += instance.OnPogo;
+        }
+
+        private void UnregisterCallbacks(ILockPickingGameActions instance)
+        {
+            @Pogo.started -= instance.OnPogo;
+            @Pogo.performed -= instance.OnPogo;
+            @Pogo.canceled -= instance.OnPogo;
+        }
+
+        public void RemoveCallbacks(ILockPickingGameActions instance)
+        {
+            if (m_Wrapper.m_LockPickingGameActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ILockPickingGameActions instance)
+        {
+            foreach (var item in m_Wrapper.m_LockPickingGameActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_LockPickingGameActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public LockPickingGameActions @lockPickingGame => new LockPickingGameActions(this);
     public interface IPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+    }
+    public interface ILockPickingGameActions
+    {
+        void OnPogo(InputAction.CallbackContext context);
     }
 }

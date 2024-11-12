@@ -78,30 +78,30 @@ public class PlayerMovement : MonoBehaviour
         switch (movementState)
         {
             case PlayerMovementState.moving:
-                handleMovingState();
+                _handleMovingState();
                 break;
             case PlayerMovementState.charging:
-                handleChargingState();
+                _handleChargingState();
                 break;
             case PlayerMovementState.launching:
-                handleLaunchingState();
+                _handleLaunchingState();
                 break;
             case PlayerMovementState.idle:
-                handleIdleState();
+                _handleIdleState();
                 break;
         }
     }
 
 
     //handlers
-    private void handleMovingState() 
+    private void _handleMovingState() 
     { 
         //movement stuff
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
         _characterController.Move(movement * _movementSpeed * Time.deltaTime);
     }
 
-    private void handleChargingState()
+    private void _handleChargingState()
     {
         Vector3 center = gameObject.transform.position;
         lineRenderer.SetPosition(0, center);
@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         _jumpHeight = Mathf.Clamp(_jumpHeight, 0, _maxJumpHeight);
     }
 
-    private void handleLaunchingState()
+    private void _handleLaunchingState()
     {
         //_velocity.x += // make this movement nicer, continually increase speed when launching using movement keys. maybe keep track of horizontal velocity and keep adding to it
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         //not a whole lot to do, maybe mid air rotations
     }
 
-    private void handleIdleState()
+    private void _handleIdleState()
     {
         //maybe bounce a bit? not sure
     }

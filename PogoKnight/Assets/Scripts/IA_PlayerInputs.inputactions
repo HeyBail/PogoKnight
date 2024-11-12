@@ -123,6 +123,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "lockPickingGame",
+            "id": "34f4fb33-cd73-4daa-aff1-011fd3f91690",
+            "actions": [
+                {
+                    "name": "Pogo",
+                    "type": "Value",
+                    "id": "185d5afd-0e66-4878-ac85-7718ca994cba",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3fbfdf22-9f89-4c98-99c7-e3de9175c749",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pogo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
