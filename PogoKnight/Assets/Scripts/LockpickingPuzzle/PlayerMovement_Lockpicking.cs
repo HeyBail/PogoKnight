@@ -45,8 +45,7 @@ public class PlayerMovement_Lockpicking : MonoBehaviour
     private void _handleLaunchingState()
     {
         transform.position = _neutralPosition.position;
-        // move to the right? could do on jump
-        if (pogo.GetComponent<Rigidbody>().velocity.magnitude < .05f)
+        if ( Vector3.Distance(pogo.transform.position, _neutralPosition.position) < .05f)
         {
             state = PlayerMovementState.idle;
         }
@@ -59,38 +58,26 @@ public class PlayerMovement_Lockpicking : MonoBehaviour
     public void OnPogo(InputValue value)
     {
         float input = value.Get<float>();
-        
-        Debug.Log(input);
-
-        Debug.Log(state);
        
-        if (input == 1)
+        if (input == 1 & state == PlayerMovementState.idle)
         {
-            if (state == PlayerMovementState.idle)
-            {
-                state = PlayerMovementState.charging;
-            }
+            state = PlayerMovementState.charging;
         }
-        else if (input == 0)
+        else if (input == 0 & state == PlayerMovementState.charging)
         {
-            if (state == PlayerMovementState.charging)
-            {
-                state = PlayerMovementState.launching;
-                pogo.GetComponent<Rigidbody>().AddForce(Vector3.right * charge, ForceMode.Impulse);
-            }
+            state = PlayerMovementState.launching;
+            pogo.GetComponent<Rigidbody>().AddForce(Vector3.right * charge, ForceMode.Impulse);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("your mother");
         if (state == PlayerMovementState.launching)
         {
-            if (collision.gameObject.tag != "Goal")
+            if (collision.gameObject.tag == "Goal")
             {
-                state = PlayerMovementState.idle;
-            }
-            else
-            {
+                Debug.Log("You Win");
                 // win or next level
                 //collision.gameObject.GetComponent<Goal>().complete;
             }
