@@ -77,7 +77,7 @@ MonoBehaviour:
   cameraCenter: {fileID: 3779115576689514810}
   playerCamera: {fileID: 7827377839060676925}
   _movementSpeed: 7
-  _airControlSpeed: 1
+  _airControlSpeed: 2
   _gravity: -9.81
   _jumpHeight: 4
   _maxJumpHeight: 15

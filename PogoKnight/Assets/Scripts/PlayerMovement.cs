@@ -105,7 +105,14 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 center = gameObject.transform.position;
         lineRenderer.SetPosition(0, center);
-        Vector3 end = center + transform.TransformDirection(new Vector3(movementInput.x * _jumpHeight, _jumpHeight, movementInput.y * _jumpHeight));
+
+        Vector3 end;
+
+        if (movementInput.x > 0 || movementInput.y > 0)
+            end = center + transform.TransformDirection(new Vector3(movementInput.x * _jumpHeight, Mathf.Sqrt(_jumpHeight), movementInput.y * _jumpHeight));
+        else
+            end = center + transform.TransformDirection(new Vector3(movementInput.x * _jumpHeight, _jumpHeight, movementInput.y * _jumpHeight));
+
         lineRenderer.SetPosition(1, end);
 
         // could rotate the player instead / as well
@@ -201,9 +208,19 @@ public class PlayerMovement : MonoBehaviour
         {
             movementState = PlayerMovementState.launching;
 
-            _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity); //this could all be cleaned up late, but probably wont be
-            _velocity.x = movementInput.x * _jumpHeight;
-            _velocity.z = movementInput.y * _jumpHeight;
+            if (movementInput.x > 0 || movementInput.y > 0)
+            {
+                _velocity.y = Mathf.Sqrt(Mathf.Sqrt(_jumpHeight) * -2f * _gravity);
+                _velocity.x = movementInput.x * _jumpHeight;
+                _velocity.z = movementInput.y * _jumpHeight;
+            }
+            else
+            {
+                _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
+                _velocity.x = 0;
+                _velocity.z = 0;
+            }
+
             _velocity = transform.TransformDirection(_velocity);
         }
     }
