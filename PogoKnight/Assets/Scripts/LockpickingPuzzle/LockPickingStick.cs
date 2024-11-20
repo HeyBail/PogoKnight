@@ -8,7 +8,7 @@ public class LockPickingStick : MonoBehaviour
     {
         if (collision.gameObject.tag == "Goal")
         {
-            MinigameManager_Lockpicking.LevelComplete();
+            MinigameManager_Lockpicking.Instance.LevelComplete();
         }
     }
 }

@@ -4,5 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects: {}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/LockPickingMiniGame.unity
+    guid: 2d8ee76befef8804899ce344e6d2f518
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 1e840b0c35854de4a9562b75cbbd7568, type: 3}

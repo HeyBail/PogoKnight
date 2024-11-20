@@ -16,7 +16,12 @@ public class VerticalObstacle : MonoBehaviour
     private int direction = -1;
 
     [SerializeField]
-    private float speed;
+    private float _speed;
+    public float SpeedProp
+    {
+        get { return _speed; }
+        set { _speed = value; }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +41,6 @@ public class VerticalObstacle : MonoBehaviour
         {
             direction = 1;
         }
-        obstacle.transform.position += obstacle.transform.up * Time.deltaTime * direction * speed;
+        obstacle.transform.position += obstacle.transform.up * Time.deltaTime * direction * _speed;
     }
 }

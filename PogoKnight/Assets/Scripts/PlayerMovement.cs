@@ -38,10 +38,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _chargeSpeed = 1.5f;
 
-
     private LineRenderer lineRenderer;
-    private WaitForSeconds lineDuration = new WaitForSeconds(3f);
 
+    public delegate void OnInteractChanged();
+    public static event OnInteractChanged onInteractChanged;
 
     void Start()
     {
@@ -206,5 +206,9 @@ public class PlayerMovement : MonoBehaviour
             _velocity.z = movementInput.y * _jumpHeight;
             _velocity = transform.TransformDirection(_velocity);
         }
+    }
+    public void OnInteract(InputValue value)
+    {
+        onInteractChanged?.Invoke();
     }
 }

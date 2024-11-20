@@ -53,6 +53,15 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""0362b614-56d9-4c74-83a3-a7c85802902d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -143,6 +152,17 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02203f64-f51c-4e4b-a0ab-5d3eb95d69f0"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -182,6 +202,7 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         m_playerMovement_Move = m_playerMovement.FindAction("Move", throwIfNotFound: true);
         m_playerMovement_Jump = m_playerMovement.FindAction("Jump", throwIfNotFound: true);
         m_playerMovement_Look = m_playerMovement.FindAction("Look", throwIfNotFound: true);
+        m_playerMovement_Interact = m_playerMovement.FindAction("Interact", throwIfNotFound: true);
         // lockPickingGame
         m_lockPickingGame = asset.FindActionMap("lockPickingGame", throwIfNotFound: true);
         m_lockPickingGame_Pogo = m_lockPickingGame.FindAction("Pogo", throwIfNotFound: true);
@@ -255,6 +276,7 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_playerMovement_Move;
     private readonly InputAction m_playerMovement_Jump;
     private readonly InputAction m_playerMovement_Look;
+    private readonly InputAction m_playerMovement_Interact;
     public struct PlayerMovementActions
     {
         private @IA_PlayerInputs m_Wrapper;
@@ -262,6 +284,7 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_playerMovement_Move;
         public InputAction @Jump => m_Wrapper.m_playerMovement_Jump;
         public InputAction @Look => m_Wrapper.m_playerMovement_Look;
+        public InputAction @Interact => m_Wrapper.m_playerMovement_Interact;
         public InputActionMap Get() { return m_Wrapper.m_playerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -280,6 +303,9 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -293,6 +319,9 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -361,6 +390,7 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface ILockPickingGameActions
     {
