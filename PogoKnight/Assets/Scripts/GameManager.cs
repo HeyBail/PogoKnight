@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    //used to store the last transform of the player when leaving the scene
+    public Dictionary<string, TransformData?> levelPlayerTransformData = new Dictionary<string, TransformData?>();
+
     private bool _chestOpen;
     public bool ChestOpenProp
     {
@@ -22,16 +26,29 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // fills dictionary with scene names as keys and null transforms
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+            levelPlayerTransformData.Add(sceneName, null);
+        }
     }
 
-    void Start()
+    public TransformData? getPlayerTransformData()
     {
-
+        return levelPlayerTransformData[SceneManager.GetActiveScene().name];
     }
 
-    void Update()
+    public void setPlayerTransformData(TransformData transformData)
     {
+        levelPlayerTransformData[SceneManager.GetActiveScene().name] = transformData;
+    }
 
+    public void setPlayerTransformData(Transform transform)
+    {
+        levelPlayerTransformData[SceneManager.GetActiveScene().name] = new TransformData(transform);
     }
 
     public bool OpenChest() 

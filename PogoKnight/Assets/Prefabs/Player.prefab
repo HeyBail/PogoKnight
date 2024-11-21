@@ -81,7 +81,7 @@ MonoBehaviour:
   _gravity: -9.81
   _jumpHeight: 4
   _maxJumpHeight: 15
-  _chargeSpeed: 4
+  _chargeSpeed: 6
 --- !u!114 &7189266279142313072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3779115576689514810}
   - component: {fileID: 3499892294818127742}
-  - component: {fileID: 2782179368077050247}
+  - component: {fileID: 5289308311814477873}
   m_Layer: 0
   m_Name: CameraCenter
   m_TagString: Untagged
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &2782179368077050247
+--- !u!114 &5289308311814477873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,9 +185,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3428373839966322359}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a24b40c513c5f9d428d33229b86278e0, type: 3}
+  m_Script: {fileID: 11500000, guid: fefae6624a57bd742b3d965fec6d0bc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  size: 0.5
+  color: {r: 0.061502814, g: 1, b: 0, a: 1}
 --- !u!1 &4735494072603747299
 GameObject:
   m_ObjectHideFlags: 0

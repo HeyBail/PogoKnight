@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 movementInput;
     private Vector2 cameraInput;
-    private float _xRotation = 90f;
+    private float _xRotation = 0f;
     private float _mouseSensitivity = 10f;
 
     public Transform cameraCenter;
@@ -56,10 +56,28 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
 
         groundMask = LayerMask.GetMask("Ground");
+
+
+        _characterController.enabled = false;
+
+        if (GameManager.Instance != null)
+        {
+            TransformData? transformData = GameManager.Instance.getPlayerTransformData();
+            if (transformData.HasValue)
+            {
+                transform.position = transformData.Value.position;
+                transform.rotation = transformData.Value.rotation * Quaternion.Euler(0, 180, 0); ;
+                transform.localScale = transformData.Value.scale;
+            }
+        }
+
+        _characterController.enabled = true;
     }
 
     private void FixedUpdate()
     {
+        Debug.Log(transform.position);
+
         _isGrounded = isGrounded();
 
         if (checkLanding())
@@ -67,10 +85,6 @@ public class PlayerMovement : MonoBehaviour
             handleLanding();
         }
 
-    }
-
-    private void Update()
-    {
         handleVerticalMovement();
 
         handleMouseMovement();
@@ -91,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
-
 
     //handlers
     private void _handleMovingState() 

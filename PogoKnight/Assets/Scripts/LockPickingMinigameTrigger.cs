@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-
 public class LockPickingMinigameTrigger : MonoBehaviour
 {
     [SerializeField]
@@ -65,6 +63,7 @@ public class LockPickingMinigameTrigger : MonoBehaviour
 
     public void loadMiniGame() 
     {
+        GameManager.Instance.setPlayerTransformData(FindFirstObjectByType<PlayerMovement>().gameObject.transform);
         SceneManager.LoadScene("LockPickingMinigame");
     }
 
