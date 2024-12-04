@@ -25,7 +25,6 @@ public class MinigameManager_Slime : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {

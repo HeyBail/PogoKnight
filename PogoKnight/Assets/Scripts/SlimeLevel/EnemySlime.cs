@@ -86,7 +86,7 @@ public class EnemySlime : MonoBehaviour
 
         Vector3 end;
 
-        end = center + new Vector3(-1 * transform.forward.x * _jumpHeight, _jumpHeight, transform.forward.z * _jumpHeight * -1);
+        end = center + new Vector3(-1 * transform.forward.x * Mathf.Sqrt(_jumpHeight) / 2, _jumpHeight / 2, -1 * transform.forward.z * Mathf.Sqrt(_jumpHeight) / 2);
 
         lineRenderer.SetPosition(1, end);
 
