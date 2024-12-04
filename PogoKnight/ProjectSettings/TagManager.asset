@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Goal
   - TankWall
+  - Slime
   layers:
   - Default
   - TransparentFX

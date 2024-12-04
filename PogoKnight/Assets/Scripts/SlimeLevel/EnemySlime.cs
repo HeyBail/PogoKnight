@@ -88,15 +88,20 @@ public class EnemySlime : MonoBehaviour
 
         end = center + new Vector3(-1 * transform.forward.x * _jumpHeight, _jumpHeight, transform.forward.z * _jumpHeight * -1);
 
-        Debug.Log("x transform: " + transform.forward.x);
-        Debug.Log("z transform: " + transform.forward.y);
-
         lineRenderer.SetPosition(1, end);
 
-        _jumpHeight += Time.deltaTime * _chargeSpeed;
-        _jumpHeight = Mathf.Clamp(_jumpHeight, 0, _maxJumpHeight);
 
-        Debug.Log(_jumpHeight);
+        if (Vector3.Distance(player.transform.position, transform.position) <= _chargingDistance)
+        {
+            _jumpHeight += Time.deltaTime * _chargeSpeed;
+            _jumpHeight = Mathf.Clamp(_jumpHeight, 0, _maxJumpHeight);
+        }
+        else 
+        {
+            _jumpHeight -= Time.deltaTime * _chargeSpeed;
+            _jumpHeight = Mathf.Clamp(_jumpHeight, 0, _maxJumpHeight);
+        }
+
 
         _chargeSlimeAnimation();
 
