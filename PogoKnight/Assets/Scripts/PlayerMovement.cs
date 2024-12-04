@@ -76,8 +76,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(transform.position);
-
         _isGrounded = isGrounded();
 
         if (checkLanding())
