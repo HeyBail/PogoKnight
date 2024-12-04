@@ -15,6 +15,8 @@ public class EnemySlime : MonoBehaviour
 
     //jumping / moving
     [SerializeField]
+    private float _minJumpHeight = 4f;
+    [SerializeField]
     private float _jumpHeight = 4f;
     [SerializeField]
     private float _maxJumpHeight = 4f;
@@ -32,6 +34,11 @@ public class EnemySlime : MonoBehaviour
     private float _jumpAwayDistance = 7f;
 
     private Rigidbody _rigidbody;
+
+    [SerializeField]
+    private float _minScale = 4f;
+    [SerializeField]
+    private float _maxScale = 4f;
 
     void Start()
     {
@@ -55,6 +62,7 @@ public class EnemySlime : MonoBehaviour
             handleLanding();
         }
 
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), Vector3.up);
 
         switch (state)
         {
@@ -73,8 +81,6 @@ public class EnemySlime : MonoBehaviour
     //handlers
     private void _handleChargingState()
     {
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), Vector3.up);
-
         Vector3 center = gameObject.transform.position;
         lineRenderer.SetPosition(0, center);
 
@@ -92,28 +98,38 @@ public class EnemySlime : MonoBehaviour
 
         Debug.Log(_jumpHeight);
 
+        _chargeSlimeAnimation();
+
         if (Vector3.Distance(player.transform.position, transform.position) < _jumpAwayDistance)
         {
-            Debug.Log("jump away");
-
             _rigidbody.AddForce(new Vector3(-1 * transform.forward.x * Mathf.Sqrt(_jumpHeight), _jumpHeight, -1 *  transform.forward.z * Mathf.Sqrt(_jumpHeight)), ForceMode.Impulse);
             state = SlimeState.launching;
+
+            _jumpHeight = _minJumpHeight;
+
+
+            transform.localScale = new Vector3(_maxScale, _maxScale, _maxScale);
         }
+    }
+
+    void _chargeSlimeAnimation() 
+    {
+        float lerpedJumpHeight = Mathf.InverseLerp(_minJumpHeight, _maxJumpHeight, _jumpHeight);
+
+        float newScale = Mathf.Lerp(_minScale, _maxScale, 1 - lerpedJumpHeight);
+
+        transform.localScale = new Vector3(transform.localScale.x, newScale, transform.localScale.z);
     }
 
     private void _handleLaunchingState()
     {
-        //Debug.Log("jummping, looking for bounce");
+
     }
 
     private void _handleIdleState()
     {
-        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), Vector3.up);
-
         if (Vector3.Distance(player.transform.position, transform.position) < _chargingDistance)
         {
-            Debug.Log("switch to charging");
-
             lineRenderer.enabled = true;
             state = SlimeState.charging;
         }
@@ -139,25 +155,23 @@ public class EnemySlime : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("HITTT");
-
         if (other.gameObject.tag == "TankWall")
         {
-            Debug.Log("HITTT WALLL");
-            Debug.Log("Velocity Before: " + _rigidbody.velocity);
-
             Vector3 closestPoint = other.ClosestPoint(transform.position);
             Vector3 normal = (transform.position - closestPoint).normalized;
-
-
 
             Vector3 incomingVelocity = _rigidbody.velocity;
             Vector3 reflectedVelocity = Vector3.Reflect(incomingVelocity, normal);
 
             _rigidbody.velocity = reflectedVelocity;
+        }
+    }
 
-
-            Debug.Log("Velocity After: " + _rigidbody.velocity);
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (((1 << collision.gameObject.layer) & groundMask) != 0)
+        {
+            state = SlimeState.idle;
         }
     }
 }
