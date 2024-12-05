@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _jumpHeight = 4f;
     [SerializeField]
+    private float _hopHeight = 1f;
+    [SerializeField]
     private float _maxJumpHeight = 4f;
     [SerializeField]
     private float _chargeSpeed = 1.5f;
@@ -106,8 +108,12 @@ public class PlayerMovement : MonoBehaviour
 
     //handlers
     private void _handleMovingState() 
-    { 
-        //movement stuff
+    {
+        if (_isGrounded)
+        {
+            _velocity.y = _hopHeight;
+        }
+
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
         _characterController.Move(movement * _movementSpeed * Time.deltaTime);
     }
@@ -119,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 end;
 
-        if (movementInput.x > 0 || movementInput.y > 0)
+        if (movementInput.x != 0 || movementInput.y != 0)
             end = center + transform.TransformDirection(new Vector3(movementInput.x * _jumpHeight, Mathf.Sqrt(_jumpHeight), movementInput.y * _jumpHeight));
         else
             end = center + transform.TransformDirection(new Vector3(movementInput.x * _jumpHeight, _jumpHeight, movementInput.y * _jumpHeight));
@@ -142,6 +148,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void _handleIdleState()
     {
+
         //maybe bounce a bit? not sure
     }
 
@@ -208,18 +215,18 @@ public class PlayerMovement : MonoBehaviour
     {
         float input = value.Get<float>();
 
-        if (!(movementState == PlayerMovementState.charging) & _isGrounded & input == 1)
+        if ((movementState == PlayerMovementState.idle || movementState == PlayerMovementState.moving) && input == 1)
         {
             movementState = PlayerMovementState.charging;
             _jumpHeight = 0;
 
             lineRenderer.enabled = true;
         }
-        else if ((movementState == PlayerMovementState.charging) & _isGrounded & input == 0)
+        else if ((movementState == PlayerMovementState.charging) && _isGrounded && input == 0)
         {
             movementState = PlayerMovementState.launching;
 
-            if (movementInput.x > 0 || movementInput.y > 0)
+            if (movementInput.x != 0 || movementInput.y != 0)
             {
                 _velocity.y = Mathf.Sqrt(Mathf.Sqrt(_jumpHeight) * -2f * _gravity);
                 _velocity.x = movementInput.x * _jumpHeight;
