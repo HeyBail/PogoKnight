@@ -196,11 +196,11 @@ public class PlayerMovement : MonoBehaviour
     {
         movementInput = value.Get<Vector2>();
 
-        if (movementInput.magnitude == 0 & _isGrounded & movementState == PlayerMovementState.moving)
+        if (movementInput.magnitude == 0 && movementState == PlayerMovementState.moving)
         {
             movementState = PlayerMovementState.idle;
         }
-        else if (movementInput.magnitude == 1 & _isGrounded & movementState == PlayerMovementState.idle)
+        else if (movementInput.magnitude == 1 && movementState == PlayerMovementState.idle)
         {
             movementState = PlayerMovementState.moving;
         }
