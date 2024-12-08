@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraCenter;
     public GameObject playerCamera;
 
-    private PlayerMovementState movementState = PlayerMovementState.moving;
+    private PlayerMovementState movementState = PlayerMovementState.idle;
 
 
     //jumping / moving

@@ -80,6 +80,7 @@ MonoBehaviour:
   _airControlSpeed: 2
   _gravity: -9.81
   _jumpHeight: 4
+  _hopHeight: 2
   _maxJumpHeight: 15
   _chargeSpeed: 6
 --- !u!114 &7189266279142313072
