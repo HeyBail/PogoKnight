@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     //used to store the last transform of the player when leaving the scene
     public Dictionary<string, TransformData?> levelPlayerTransformData = new Dictionary<string, TransformData?>();
 
+    public string lastLevelName;
+
     private bool _chestOpen;
     public bool ChestOpenProp
     {

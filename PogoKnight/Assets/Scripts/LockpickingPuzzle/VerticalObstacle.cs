@@ -33,11 +33,11 @@ public class VerticalObstacle : MonoBehaviour
     void Update()
     {
 
-        if (Vector3.Distance(obstacle.transform.position, _upperBound.position) < .05f)
+        if (obstacle.transform.position.y > _upperBound.position.y)
         {
             direction = -1;
         }
-        else if (Vector3.Distance(obstacle.transform.position, _lowerBound.position) < .05f)
+        else if (obstacle.transform.position.y < _lowerBound.position.y)
         {
             direction = 1;
         }
