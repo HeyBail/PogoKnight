@@ -193,6 +193,34 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""pauseGame"",
+            ""id"": ""5fc72173-eee3-47a7-b817-7d74b202efa8"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""6743e32f-9de7-4d5c-8440-3e38fc325dc5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""99e63c72-4dd7-4c4c-8f0b-4b0d7a04cb5c"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -206,12 +234,16 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         // lockPickingGame
         m_lockPickingGame = asset.FindActionMap("lockPickingGame", throwIfNotFound: true);
         m_lockPickingGame_Pogo = m_lockPickingGame.FindAction("Pogo", throwIfNotFound: true);
+        // pauseGame
+        m_pauseGame = asset.FindActionMap("pauseGame", throwIfNotFound: true);
+        m_pauseGame_Pause = m_pauseGame.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@IA_PlayerInputs()
     {
         UnityEngine.Debug.Assert(!m_playerMovement.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.playerMovement.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_lockPickingGame.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.lockPickingGame.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_pauseGame.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.pauseGame.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -385,6 +417,52 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public LockPickingGameActions @lockPickingGame => new LockPickingGameActions(this);
+
+    // pauseGame
+    private readonly InputActionMap m_pauseGame;
+    private List<IPauseGameActions> m_PauseGameActionsCallbackInterfaces = new List<IPauseGameActions>();
+    private readonly InputAction m_pauseGame_Pause;
+    public struct PauseGameActions
+    {
+        private @IA_PlayerInputs m_Wrapper;
+        public PauseGameActions(@IA_PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_pauseGame_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_pauseGame; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PauseGameActions set) { return set.Get(); }
+        public void AddCallbacks(IPauseGameActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PauseGameActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PauseGameActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IPauseGameActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IPauseGameActions instance)
+        {
+            if (m_Wrapper.m_PauseGameActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPauseGameActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PauseGameActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PauseGameActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PauseGameActions @pauseGame => new PauseGameActions(this);
     public interface IPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -395,5 +473,9 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
     public interface ILockPickingGameActions
     {
         void OnPogo(InputAction.CallbackContext context);
+    }
+    public interface IPauseGameActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }

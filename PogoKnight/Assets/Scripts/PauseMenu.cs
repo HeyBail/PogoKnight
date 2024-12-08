@@ -22,17 +22,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
-        }
+
     }
 
     public void OnPause(InputValue value)
@@ -83,7 +73,10 @@ public class PauseMenu : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        GameManager.Instance.setPlayerTransformData(FindFirstObjectByType<PlayerMovement>().gameObject.transform);
+        if (FindFirstObjectByType<PlayerMovement>() != null)
+        {
+            GameManager.Instance.setPlayerTransformData(FindFirstObjectByType<PlayerMovement>().gameObject.transform);
+        }
         GameManager.Instance.lastLevelName = SceneManager.GetActiveScene().name;
 
         Time.timeScale = 1f;
