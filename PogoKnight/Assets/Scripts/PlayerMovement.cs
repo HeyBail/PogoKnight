@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     private float _mouseSensitivity = 10f;
 
     public Transform cameraCenter;
-    public GameObject playerCamera;
 
     private PlayerMovementState movementState = PlayerMovementState.idle;
 
