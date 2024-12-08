@@ -171,6 +171,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "pauseGame",
+            "id": "5fc72173-eee3-47a7-b817-7d74b202efa8",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "6743e32f-9de7-4d5c-8440-3e38fc325dc5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "99e63c72-4dd7-4c4c-8f0b-4b0d7a04cb5c",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

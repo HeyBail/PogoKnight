@@ -3426,14 +3426,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4728501432031895081, guid: ed7c51564d23d0542ac093c3355080e0, type: 3}
-      propertyPath: PlayerMovement
-      value: 
-      objectReference: {fileID: 307735627}
-    - target: {fileID: 7542125229109209512, guid: ed7c51564d23d0542ac093c3355080e0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7780595478994022941, guid: ed7c51564d23d0542ac093c3355080e0, type: 3}
       propertyPath: m_Name
       value: PauseMenu
