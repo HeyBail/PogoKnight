@@ -222,7 +222,7 @@ public class PlayerMovement : MonoBehaviour
 
             lineRenderer.enabled = true;
         }
-        else if ((movementState == PlayerMovementState.charging) && _isGrounded && input == 0)
+        else if ((movementState == PlayerMovementState.charging) && input == 0)
         {
             movementState = PlayerMovementState.launching;
 

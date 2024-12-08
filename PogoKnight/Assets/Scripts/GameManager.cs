@@ -40,8 +40,14 @@ public class GameManager : MonoBehaviour
         get { return _mushroomCollected; }
     }
 
-    public delegate void OnCollectItem();
-    public static event OnCollectItem onCollectItem;
+    private bool _potionMakingReady;
+    public bool PotionMakingReadyProp
+    {
+        get { return _potionMakingReady; }
+    }
+
+    public delegate void OnGameProgressed();
+    public static event OnGameProgressed onGameProgressed;
 
     public static GameManager Instance;
     private void Awake()
@@ -82,29 +88,50 @@ public class GameManager : MonoBehaviour
 
     public bool OpenChest() 
     {
-        return _chestOpen = true;
+        _chestOpen = true;
+        onGameProgressed?.Invoke();
+        return _chestOpen;
     }
 
     public bool DefeatSlime()
     {
-        return _slimeDefeated = true;
+        _slimeDefeated = true;
+        onGameProgressed?.Invoke();
+        return _slimeDefeated;
     }
 
     public bool CollectSlime()
     {
-        onCollectItem?.Invoke();
-        return _slimeCollected = true;
+        _slimeCollected = true;
+        onGameProgressed?.Invoke();
+        return _slimeCollected;
     }
 
     public bool CollectCrystal()
     {
-        onCollectItem?.Invoke();
-        return _crystalCollected = true;
+        _crystalCollected = true;
+        onGameProgressed?.Invoke();
+        return _crystalCollected;
     }
 
     public bool CollectMushroom()
     {
-        onCollectItem?.Invoke();
-        return _mushroomCollected = true;
+        _mushroomCollected = true;
+        onGameProgressed?.Invoke();
+        return _mushroomCollected;
+    }
+
+    void OnEnable()
+    {
+        GameManager.onGameProgressed += _checkAllIngredients;
+    }
+
+    void _checkAllIngredients() 
+    {
+        if (_slimeCollected && _crystalCollected && _mushroomCollected && !_potionMakingReady)
+        {
+            _potionMakingReady = true;
+            GameManager.onGameProgressed();
+        }
     }
 }
