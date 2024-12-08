@@ -16,7 +16,15 @@ public class MinigameManager_Slime : MonoBehaviour
 
     void Start()
     {
-
+        if (GameManager.Instance.SlimeDefeatedProp)
+        {
+            slime.SetActive(false);
+            slimeJarEmpty.SetActive(false);
+            if (!GameManager.Instance.SlimeCollectedProp) 
+            {
+                slimeJarFull.SetActive(true);
+            }
+        }
     }
 
     public static MinigameManager_Slime Instance;
@@ -37,5 +45,6 @@ public class MinigameManager_Slime : MonoBehaviour
         slime.SetActive(false);
         slimeJarEmpty.SetActive(false);
         slimeJarFull.SetActive(true);
+        GameManager.Instance.DefeatSlime();
     }
 }
