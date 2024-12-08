@@ -16,6 +16,33 @@ public class GameManager : MonoBehaviour
         get { return _chestOpen; }
     }
 
+    private bool _slimeDefeated;
+    public bool SlimeDefeatedProp
+    {
+        get { return _slimeDefeated; }
+    }
+
+    private bool _slimeCollected;
+    public bool SlimeCollectedProp
+    {
+        get { return _slimeCollected; }
+    }
+
+    private bool _crystalCollected;
+    public bool CrystalCollectedProp
+    {
+        get { return _crystalCollected; }
+    }
+
+    private bool _mushroomCollected;
+    public bool MushroomCollectedProp
+    {
+        get { return _mushroomCollected; }
+    }
+
+    public delegate void OnCollectItem();
+    public static event OnCollectItem onCollectItem;
+
     public static GameManager Instance;
     private void Awake()
     {
@@ -56,5 +83,28 @@ public class GameManager : MonoBehaviour
     public bool OpenChest() 
     {
         return _chestOpen = true;
+    }
+
+    public bool DefeatSlime()
+    {
+        return _slimeDefeated = true;
+    }
+
+    public bool CollectSlime()
+    {
+        onCollectItem?.Invoke();
+        return _slimeCollected = true;
+    }
+
+    public bool CollectCrystal()
+    {
+        onCollectItem?.Invoke();
+        return _crystalCollected = true;
+    }
+
+    public bool CollectMushroom()
+    {
+        onCollectItem?.Invoke();
+        return _mushroomCollected = true;
     }
 }
