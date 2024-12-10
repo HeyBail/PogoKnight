@@ -9,6 +9,10 @@ public class LockPickingMinigameTrigger : MonoBehaviour
     GameObject boxLidClosed;
     [SerializeField]
     GameObject boxLidOpen;
+    [SerializeField]
+    GameObject crystal;
+    [SerializeField]
+    GameObject indicator;
 
     [SerializeField]
     Transform playerLocation;
@@ -73,11 +77,15 @@ public class LockPickingMinigameTrigger : MonoBehaviour
         {
             boxLidClosed.SetActive(false);
             boxLidOpen.SetActive(true);
+            indicator.SetActive(true);
+            crystal.SetActive(true);
         }
         else
         {
             boxLidClosed.SetActive(true);
             boxLidOpen.SetActive(false);
+            indicator.SetActive(false);
+            crystal.SetActive(false);
         }
     }
 }

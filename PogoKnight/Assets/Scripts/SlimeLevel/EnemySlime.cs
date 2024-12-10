@@ -47,7 +47,7 @@ public class EnemySlime : MonoBehaviour
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.startWidth = .25f;
         lineRenderer.endWidth = .25f;
-        lineRenderer.material.color = Color.cyan;
+        lineRenderer.material.color = Color.blue;
         lineRenderer.enabled = false;
 
         groundMask = LayerMask.GetMask("Ground");    
