@@ -135,6 +135,8 @@ public class PlayerMovement : MonoBehaviour
 
         _jumpHeight += Time.deltaTime * _chargeSpeed;
         _jumpHeight = Mathf.Clamp(_jumpHeight, 0, _maxJumpHeight);
+
+        updateUI(Mathf.InverseLerp(0, _maxJumpHeight, _jumpHeight));
     }
 
     private void _handleLaunchingState()
@@ -188,6 +190,8 @@ public class PlayerMovement : MonoBehaviour
         movementState = PlayerMovementState.moving;
         transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
         lineRenderer.enabled = false;
+
+        updateUI(0);
     }
 
     //Movement Input Actions
@@ -244,5 +248,13 @@ public class PlayerMovement : MonoBehaviour
     public void OnInteract(InputValue value)
     {
         onInteractChanged?.Invoke();
+    }
+
+    private void updateUI(float normalizedValue) 
+    {
+        if (PlayerUI.Instance != null) 
+        {
+            PlayerUI.Instance.updateSlider(normalizedValue);
+        }
     }
 }
