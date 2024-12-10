@@ -23,6 +23,7 @@ public class HammerController : MonoBehaviour
     public Slider hammerCooldown;
 
     public HammerOscilator oscilator;
+    public GameObject next;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +76,7 @@ public class HammerController : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
 
+        GameObject.Instantiate(next);
         GameObject.Destroy(crushingRoot);
 
         // Wait for the next frame

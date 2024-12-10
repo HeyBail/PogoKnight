@@ -234,6 +234,15 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shake"",
+                    ""type"": ""Value"",
+                    ""id"": ""8002e816-d8ef-4593-bf3c-41287f6aed8f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -247,32 +256,15 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Chop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""potionMixing"",
-            ""id"": ""911419ad-923e-4a92-aec7-11d1ba7cc3a9"",
-            ""actions"": [
-                {
-                    ""name"": ""Chop"",
-                    ""type"": ""Button"",
-                    ""id"": ""36c5ead4-611e-40ab-9eb2-e02bea13f1a1"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""d71d271a-e90f-482b-9f88-56645e01fcd8"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""76b0240c-6704-4bce-9eb6-c85dce520ec5"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Chop"",
+                    ""action"": ""Shake"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -296,6 +288,7 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         // potionMixing
         m_potionMixing = asset.FindActionMap("potionMixing", throwIfNotFound: true);
         m_potionMixing_Chop = m_potionMixing.FindAction("Chop", throwIfNotFound: true);
+        m_potionMixing_Shake = m_potionMixing.FindAction("Shake", throwIfNotFound: true);
     }
 
     ~@IA_PlayerInputs()
@@ -528,11 +521,13 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_potionMixing;
     private List<IPotionMixingActions> m_PotionMixingActionsCallbackInterfaces = new List<IPotionMixingActions>();
     private readonly InputAction m_potionMixing_Chop;
+    private readonly InputAction m_potionMixing_Shake;
     public struct PotionMixingActions
     {
         private @IA_PlayerInputs m_Wrapper;
         public PotionMixingActions(@IA_PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Chop => m_Wrapper.m_potionMixing_Chop;
+        public InputAction @Shake => m_Wrapper.m_potionMixing_Shake;
         public InputActionMap Get() { return m_Wrapper.m_potionMixing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -545,6 +540,9 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
             @Chop.started += instance.OnChop;
             @Chop.performed += instance.OnChop;
             @Chop.canceled += instance.OnChop;
+            @Shake.started += instance.OnShake;
+            @Shake.performed += instance.OnShake;
+            @Shake.canceled += instance.OnShake;
         }
 
         private void UnregisterCallbacks(IPotionMixingActions instance)
@@ -552,6 +550,9 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
             @Chop.started -= instance.OnChop;
             @Chop.performed -= instance.OnChop;
             @Chop.canceled -= instance.OnChop;
+            @Shake.started -= instance.OnShake;
+            @Shake.performed -= instance.OnShake;
+            @Shake.canceled -= instance.OnShake;
         }
 
         public void RemoveCallbacks(IPotionMixingActions instance)
@@ -587,9 +588,6 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
     public interface IPotionMixingActions
     {
         void OnChop(InputAction.CallbackContext context);
-    }
-    public interface IPotionMixingActions
-    {
-        void OnChop(InputAction.CallbackContext context);
+        void OnShake(InputAction.CallbackContext context);
     }
 }
