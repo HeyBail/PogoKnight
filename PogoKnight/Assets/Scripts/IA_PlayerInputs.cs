@@ -221,6 +221,54 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""potionMixing"",
+            ""id"": ""911419ad-923e-4a92-aec7-11d1ba7cc3a9"",
+            ""actions"": [
+                {
+                    ""name"": ""Chop"",
+                    ""type"": ""Button"",
+                    ""id"": ""36c5ead4-611e-40ab-9eb2-e02bea13f1a1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shake"",
+                    ""type"": ""Value"",
+                    ""id"": ""8002e816-d8ef-4593-bf3c-41287f6aed8f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d71d271a-e90f-482b-9f88-56645e01fcd8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Chop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76b0240c-6704-4bce-9eb6-c85dce520ec5"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -237,6 +285,10 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         // pauseGame
         m_pauseGame = asset.FindActionMap("pauseGame", throwIfNotFound: true);
         m_pauseGame_Pause = m_pauseGame.FindAction("Pause", throwIfNotFound: true);
+        // potionMixing
+        m_potionMixing = asset.FindActionMap("potionMixing", throwIfNotFound: true);
+        m_potionMixing_Chop = m_potionMixing.FindAction("Chop", throwIfNotFound: true);
+        m_potionMixing_Shake = m_potionMixing.FindAction("Shake", throwIfNotFound: true);
     }
 
     ~@IA_PlayerInputs()
@@ -244,6 +296,7 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_playerMovement.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.playerMovement.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_lockPickingGame.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.lockPickingGame.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_pauseGame.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.pauseGame.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_potionMixing.enabled, "This will cause a leak and performance issues, IA_PlayerInputs.potionMixing.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -463,6 +516,60 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public PauseGameActions @pauseGame => new PauseGameActions(this);
+
+    // potionMixing
+    private readonly InputActionMap m_potionMixing;
+    private List<IPotionMixingActions> m_PotionMixingActionsCallbackInterfaces = new List<IPotionMixingActions>();
+    private readonly InputAction m_potionMixing_Chop;
+    private readonly InputAction m_potionMixing_Shake;
+    public struct PotionMixingActions
+    {
+        private @IA_PlayerInputs m_Wrapper;
+        public PotionMixingActions(@IA_PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Chop => m_Wrapper.m_potionMixing_Chop;
+        public InputAction @Shake => m_Wrapper.m_potionMixing_Shake;
+        public InputActionMap Get() { return m_Wrapper.m_potionMixing; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PotionMixingActions set) { return set.Get(); }
+        public void AddCallbacks(IPotionMixingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PotionMixingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PotionMixingActionsCallbackInterfaces.Add(instance);
+            @Chop.started += instance.OnChop;
+            @Chop.performed += instance.OnChop;
+            @Chop.canceled += instance.OnChop;
+            @Shake.started += instance.OnShake;
+            @Shake.performed += instance.OnShake;
+            @Shake.canceled += instance.OnShake;
+        }
+
+        private void UnregisterCallbacks(IPotionMixingActions instance)
+        {
+            @Chop.started -= instance.OnChop;
+            @Chop.performed -= instance.OnChop;
+            @Chop.canceled -= instance.OnChop;
+            @Shake.started -= instance.OnShake;
+            @Shake.performed -= instance.OnShake;
+            @Shake.canceled -= instance.OnShake;
+        }
+
+        public void RemoveCallbacks(IPotionMixingActions instance)
+        {
+            if (m_Wrapper.m_PotionMixingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPotionMixingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PotionMixingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PotionMixingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PotionMixingActions @potionMixing => new PotionMixingActions(this);
     public interface IPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -477,5 +584,10 @@ public partial class @IA_PlayerInputs: IInputActionCollection2, IDisposable
     public interface IPauseGameActions
     {
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IPotionMixingActions
+    {
+        void OnChop(InputAction.CallbackContext context);
+        void OnShake(InputAction.CallbackContext context);
     }
 }

@@ -199,6 +199,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "potionMixing",
+            "id": "911419ad-923e-4a92-aec7-11d1ba7cc3a9",
+            "actions": [
+                {
+                    "name": "Chop",
+                    "type": "Button",
+                    "id": "36c5ead4-611e-40ab-9eb2-e02bea13f1a1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Shake",
+                    "type": "Value",
+                    "id": "8002e816-d8ef-4593-bf3c-41287f6aed8f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d71d271a-e90f-482b-9f88-56645e01fcd8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Chop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76b0240c-6704-4bce-9eb6-c85dce520ec5",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
