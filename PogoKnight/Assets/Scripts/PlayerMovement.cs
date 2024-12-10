@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _jumpHeight = 4f;
     [SerializeField]
-    private float _hopHeight = 1f;
+    private float _hopHeight = 2f;
     [SerializeField]
     private float _maxJumpHeight = 4f;
     [SerializeField]
