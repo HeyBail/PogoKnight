@@ -416,6 +416,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Plank_01
       objectReference: {fileID: 0}
+    - target: {fileID: 187594, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 477968, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
       propertyPath: m_LocalScale.x
       value: 12
@@ -594,6 +598,10 @@ PrefabInstance:
     - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Chain_02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_LocalScale.x
@@ -1269,6 +1277,10 @@ PrefabInstance:
     - target: {fileID: 126206, guid: edd815d6828cbde439a3373e1f684ff4, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Table_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 126206, guid: edd815d6828cbde439a3373e1f684ff4, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 407522, guid: edd815d6828cbde439a3373e1f684ff4, type: 3}
       propertyPath: m_LocalScale.x
@@ -2652,7 +2664,7 @@ GameObject:
   - component: {fileID: 471022857}
   - component: {fileID: 471022856}
   - component: {fileID: 471022855}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2960,7 +2972,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 524802081}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plank Shelf (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3436,6 +3448,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 449052, guid: 939f27c57ef13654eafcf37ff873a454, type: 3}
   m_PrefabInstance: {fileID: 598430345}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &601128660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 601128662}
+  - component: {fileID: 601128661}
+  m_Layer: 0
+  m_Name: Barrier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &601128661
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601128660}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &601128662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601128660}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.53, y: 18.75, z: 16.81}
+  m_LocalScale: {x: 45.51, y: 18.07, z: 1.81}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &624174404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3652,6 +3717,10 @@ PrefabInstance:
     - target: {fileID: 187594, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Plank_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 187594, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 477968, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
       propertyPath: m_LocalScale.x
@@ -4722,7 +4791,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 819664996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plank Shelf (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5157,6 +5226,10 @@ PrefabInstance:
     - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Chain_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_LocalScale.x
@@ -5752,6 +5825,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Chain_02
       objectReference: {fileID: 0}
+    - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_LocalScale.x
       value: 8
@@ -5930,6 +6007,10 @@ PrefabInstance:
     - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Chain_02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_LocalScale.x
@@ -6706,6 +6787,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Chain_02
       objectReference: {fileID: 0}
+    - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_LocalScale.x
       value: 8
@@ -7205,6 +7290,10 @@ PrefabInstance:
     - target: {fileID: 187594, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Plank_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 187594, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 477968, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
       propertyPath: m_LocalScale.x
@@ -8563,7 +8652,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1517610381}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plank Shelf (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9566,6 +9655,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Chain_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_LocalScale.x
       value: 8
@@ -9744,6 +9837,10 @@ PrefabInstance:
     - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Chain_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_LocalScale.x
@@ -10691,6 +10788,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Chain_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 121702, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
       propertyPath: m_LocalScale.x
       value: 8
@@ -10753,6 +10854,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 499800, guid: c8cf2feec6fdb64409481052e4cf4a2b, type: 3}
   m_PrefabInstance: {fileID: 1835026330}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1840328419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1840328421}
+  - component: {fileID: 1840328420}
+  m_Layer: 0
+  m_Name: Barrier (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1840328420
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840328419}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1840328421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840328419}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: -0.058870837, w: 0.9982656}
+  m_LocalPosition: {x: -1.96, y: 22.92, z: 28.5}
+  m_LocalScale: {x: 45.51, y: 1, z: 20}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -6.75}
 --- !u!1 &1847796386
 GameObject:
   m_ObjectHideFlags: 0
@@ -11453,7 +11607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1998769520}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plank Shelf (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11594,6 +11748,10 @@ PrefabInstance:
     - target: {fileID: 187594, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Plank_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 187594, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 477968, guid: dcb161f5ca573ab41ac18a8b74630ef6, type: 3}
       propertyPath: m_LocalScale.x
@@ -12602,3 +12760,5 @@ SceneRoots:
   - {fileID: 312754079}
   - {fileID: 2116493161}
   - {fileID: 1037377384}
+  - {fileID: 601128662}
+  - {fileID: 1840328421}
