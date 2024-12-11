@@ -37,7 +37,6 @@ public class CameraCenter : MonoBehaviour
                 distance = maxDistance;
             }
         }
-        Debug.Log(distance);
         cameraTransform.localPosition = new Vector3(0, 0, -distance);
     }
 }
